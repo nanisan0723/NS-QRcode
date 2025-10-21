@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QRコードをなんかいい感じに生成するサイト</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #e6f4ea;
+      color: #204d2b;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
+    }
+    h1 {
+      color: #2e7d32;
+    }
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      width: 100%;
+    }
+    select, input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #a5d6a7;
+      border-radius: 0.5rem;
+    }
+    button {
+      width: 100%;
+      background-color: #43a047;
+      color: white;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #qrcode {
+      margin-top: 2rem;
+    }
+  </style>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+<img src="https://nanisan0723.github.io/Nanisan-blog-test/Nanisan.comver2.png" width="300" height="auto">
+</head>
+<body>
+    <h1>QRコードをなんかいい感じに生成するサイト</h1>
+    <div class="card">
+      <label for="type">形式を選択：</label>
+      <select id="type">
+        <option value="url">URL</option>
+        <option value="youtube">YouTube</option>
+        <option value="email">メール</option>
+        <option value="text">フリーテキスト</option>
+        <option value="tel">電話番号</option>
+        <option value="sms">SMS</option>
+        <option value="wifi">Wi-Fi(Wi-Fi名,パスワード)</option>
+        <option value="app">アプリURL</option>
+      </select>
+
+    <input type="text" id="inputValue" placeholder="ここに入力" />
+
+    <button onclick="generateQR()">いい感じに生成</button>
+
+    <div id="qrcode"></div>
+    </div>
+
+    <script>
+      function generateQR() {
+        const type = document.getElementById("type").value;
+        const input = document.getElementById("inputValue").value.trim();
+        let data = input;
+
+        switch (type) {
+          case "email":
+            data = `mailto:${input}`;
+            break;
+          case "youtube":
+            data = input.startsWith("http") ? input : `https://www.youtube.com/watch?v=${input}`;
+            break;
+          case "tel":
+            data = `tel:${input}`;
+            break;
+          case "sms":
+            data = `sms:${input}?body=こんにちは！`;
+            break;
+          case "wifi":
+            // 簡易入力用：SSIDとパスワードを「SSID,PASSWORD」の形で入力
+            const parts = input.split(",");
+            const ssid = parts[0] || "";
+            const password = parts[1] || "";
+            data = `WIFI:S:${ssid};T:WPA;P:${password};;`;
+            break;
+          case "app":
+            // AppStore / GooglePlay リンクを直接QR化
+            data = input;
+            break;
+        }
+
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = "";
+        QRCode.toCanvas(data, { width: 256, margin: 2 }, function (err, canvas) {
+          if (err) console.error(err);
+          else qrContainer.appendChild(canvas);
+        });
+      }
+    </script>
+</body>
+</html>
