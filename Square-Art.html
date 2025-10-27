@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>画像を□▨■グリッドに変換（縦横比維持）</title>
+  <title>スクエアアートをなんかいい感じに生成するサイト</title>
   <style>
     body { font-family: system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Segoe UI', Roboto, 'メイリオ', sans-serif; padding: 20px; background:#fafafa; color:#111 }
     h1 { font-size:18px }
@@ -19,11 +19,10 @@
   </style>
 </head>
 <body>
-  <h1>画像を横 <strong>90文字</strong>（または任意の文字数）で □▨■ グリッド化（縦横比維持）</h1>
+  <h1>画像を任意の文字数で□▨■に変換する感じ</h1>
   <div class="controls">
     <div>
       <label>画像を選択: <input id="file" type="file" accept="image/*"></label>
-      <div class="meta">※ 縦横比を維持したまま、指定した横文字数に合わせてリサイズします。</div>
     </div>
   </div>
   <div style="display:flex;gap:12px;align-items:flex-start;">
